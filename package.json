@@ -1,0 +1,36 @@
+{
+  "name": "portfolio-website",
+  "version": "1.0.0",
+  "description": "Interactive portfolio website with Three.js and custom mouse effects",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server.js",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "nodemailer": "^7.0.3",
+    "react": "^19.1.0",
+    "three": "^0.177.0",
+    "web-vitals": "^5.0.2"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.0.2"
+  },
+  "keywords": [
+    "portfolio",
+    "react",
+    "threejs",
+    "express",
+    "nodejs"
+  ],
+  "author": "Adarsh",
+  "license": "MIT"
+}
