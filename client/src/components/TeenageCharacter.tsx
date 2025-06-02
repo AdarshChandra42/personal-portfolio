@@ -66,18 +66,20 @@ const TeenageCharacter: React.FC<TeenageCharacterProps> = ({
     // Left arm movement for "hi" - continuous waving
     if (LeftArm) {
       // Raise arm and move side to side
-      LeftArm.rotation.z = Math.sin(time) * 0.3 + 0.6; // Side motion with raised position
+      LeftArm.rotation.z =0.6; // Side motion with raised position
       LeftArm.rotation.x = 0.3; // Keep arm slightly forward
     }
     
     if (LeftForeArm) {
       // Bend forearm naturally
-      LeftForeArm.rotation.x = 0.2;
+      LeftForeArm.rotation.z = Math.sin(time) * 0.2 +1.3;
+      LeftForeArm.rotation.x = -0.29;
+      LeftForeArm.rotation.y = -1.66;
     }
     
     if (LeftHand) {
       // Hand waving motion
-      LeftHand.rotation.y = Math.sin(time * 3) * 0.4; // Quick hand wave
+      LeftHand.rotation.y = 0.4; // Quick hand wave
     }
     
     // Control facial expressions via morph targets
@@ -113,7 +115,7 @@ const TeenageCharacter: React.FC<TeenageCharacterProps> = ({
       groupRef.current.position.y = position[1] + Math.sin(clock.getElapsedTime() * 0.5) * 0.1;
       
       // Continuous rotation around Y-axis (revolving around itself)
-      groupRef.current.rotation.y = clock.getElapsedTime() * 0.5;
+      //groupRef.current.rotation.y = clock.getElapsedTime() * 0.5;
     }
     
     // Animate the left arm saying "hi"

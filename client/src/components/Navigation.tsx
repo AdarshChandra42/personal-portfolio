@@ -145,7 +145,7 @@ const Navigation: React.FC = () => {
           onClick={(e) => handleNavClick(e, '#hero')}
           whileHover={{ scale: 1.05 }}
         >
-          AK
+          Portfolio
         </Logo>
 
         <NavMenu isOpen={isMobileMenuOpen}>

@@ -12,45 +12,57 @@ const HeroContainer = styled.section`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
 `;
 
 const HeroContent = styled.div`
   position: relative;
   z-index: 2;
   text-align: center;
-  max-width: 800px;
-  padding: 0 2rem;
+  max-width: 900px;
+  padding: 2.5rem 2rem;
+  background: rgba(30, 30, 50, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
 `;
 
 const HeroTitle = styled(motion.h1)`
-  font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 800;
+  font-size: clamp(3.5rem, 4.5vw, 6.5rem);
+  font-weight: 700;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-family: 'Geist', sans-serif;
-  line-height: 1.1;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
 `;
 
 const HeroSubtitle = styled(motion.h2)`
-  font-size: clamp(1.2rem, 3vw, 2rem);
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 2rem;
-  font-family: 'Geist', sans-serif;
+  font-size: clamp(1.25rem, 2vw, 2.25rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.95);
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
 `;
 
 const HeroDescription = styled(motion.p)`
-  font-size: 1.2rem;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 3rem;
-  max-width: 600px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 3.5rem;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
-  font-family: 'Geist', sans-serif;
+  letter-spacing: 0.005em;
+  font-weight: 300;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
 `;
 
 const CTAContainer = styled(motion.div)`
@@ -58,28 +70,31 @@ const CTAContainer = styled(motion.div)`
   gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 2rem;
 `;
 
 const CTAButton = styled(motion.a)`
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem 2rem;
+  gap: 0.75rem;
+  padding: 1.25rem 2.75rem;
   border-radius: 50px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.1rem;
+  letter-spacing: 0.01em;
   transition: all 0.3s ease;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  cursor: pointer;
   
   &.primary {
-    background: linear-gradient(45deg, #4f46e5, #06b6d4);
+    background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
     color: white;
     border: 2px solid transparent;
     
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
     }
   }
   
@@ -91,7 +106,8 @@ const CTAButton = styled(motion.a)`
     &:hover {
       border-color: rgba(255, 255, 255, 0.6);
       background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
     }
   }
 `;
@@ -107,35 +123,57 @@ const ThreeJSBackground = styled.div`
 
 const ScrollIndicator = styled(motion.div)`
   position: absolute;
-  bottom: 2rem;
+  bottom: 2.5rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
-  font-family: 'Geist', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: 'Geist Mono', 'Geist', monospace;
+  z-index: 3;
 `;
 
 const ScrollArrow = styled(motion.div)`
-  width: 20px;
-  height: 20px;
-  border-right: 2px solid rgba(255, 255, 255, 0.6);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
-  transform: rotate(45deg);
-  margin-top: 0.5rem;
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.4);
+  margin-top: 0.75rem;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: -3px;
+    width: 7px;
+    height: 7px;
+    border-right: 1px solid rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    transform: rotate(45deg);
+  }
 `;
 
 const Hero: React.FC = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <HeroContainer id="hero">
       <ThreeJSBackground>
         <Canvas
           camera={{ position: [0, 0, 5], fov: 75 }}
-          gl={{ antialias: true }}
+          gl={{ antialias: true, alpha: true }}
         >
-          <Stars radius={300} depth={60} count={20000} factor={7} saturation={0} fade={true} />
+          <Stars radius={300} depth={60} count={15000} factor={6} saturation={0} fade={true} />
           <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
           <HeroScene />
         </Canvas>
@@ -147,7 +185,7 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          Adarsh Kumar
+          Adarsh Chandra
         </HeroTitle>
 
         <HeroSubtitle
@@ -155,7 +193,7 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          Full-Stack Developer & 3D Enthusiast
+          Backend-Focused Full-Stack Developer
         </HeroSubtitle>
 
         <HeroDescription
@@ -163,8 +201,8 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          Crafting immersive digital experiences with modern web technologies, 
-          Three.js, and a passion for clean, efficient code.
+          Building scalable digital architectures with modern web 
+          technologies and a passion for clean, efficient code.
         </HeroDescription>
 
         <CTAContainer
@@ -173,7 +211,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <CTAButton
-            href="#projects"
+            onClick={() => scrollToSection('projects')}
             className="primary"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -181,7 +219,7 @@ const Hero: React.FC = () => {
             View My Work
           </CTAButton>
           <CTAButton
-            href="#contact"
+            onClick={() => scrollToSection('contact')}
             className="secondary"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -198,8 +236,8 @@ const Hero: React.FC = () => {
       >
         <span>Scroll to explore</span>
         <ScrollArrow
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         />
       </ScrollIndicator>
     </HeroContainer>

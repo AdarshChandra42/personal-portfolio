@@ -172,7 +172,7 @@ const Footer: React.FC = () => {
     <FooterContainer>
       <FooterContent>
         <FooterSection>
-          <FooterTitle>Adarsh Kumar</FooterTitle>
+          <FooterTitle>Adarsh Chandra</FooterTitle>
           <FooterText>
             Full-Stack Developer passionate about creating immersive digital experiences 
             with modern web technologies and 3D graphics.

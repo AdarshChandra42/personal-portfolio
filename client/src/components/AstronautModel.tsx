@@ -19,7 +19,7 @@ const AstronautModel: React.FC<AstronautModelProps> = ({
   
   try {
     // Try to load the GLB model
-    const gltf = useLoader(GLTFLoader, '/models/astronaut/astronaut.glb');
+    const gltf = useLoader(GLTFLoader, '/models/astronaut/astronaut.gltf');
     const { actions } = useAnimations(gltf.animations, group);
 
     // Play idle animation if available
