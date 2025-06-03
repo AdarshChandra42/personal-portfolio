@@ -242,6 +242,11 @@ const AnimatedSpheres: React.FC = () => {
   );
 };
 
+interface FormResponse {
+  success: boolean;
+  message: string;
+}
+
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -266,19 +271,41 @@ const Contact: React.FC = () => {
     setSubmitMessage('');
 
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('Sending form data:', formData);
       
-      const isSuccess = Math.random() > 0.2; // 80% success rate for demo
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify(formData),
+      });
+
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
       
-      if (isSuccess) {
-        setSubmitMessage('Thank you for your message! I\'ll get back to you soon.');
+      const data: FormResponse = await response.json();
+      console.log('Response data:', data);
+      
+      if (response.ok) {
+        setSubmitMessage(data.message);
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
-        setSubmitMessage('Sorry, there was an error sending your message. Please try again.');
+        throw new Error(data.message || 'Server error occurred');
       }
     } catch (error) {
-      setSubmitMessage('Sorry, there was an error sending your message. Please try again.');
+      console.error('Error submitting form:', error);
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        console.error('Network error details:', {
+          message: error.message,
+          stack: error.stack
+        });
+        setSubmitMessage('Unable to connect to the server. Please make sure the server is running and try again.');
+      } else {
+        console.error('Unexpected error:', error);
+        setSubmitMessage(error instanceof Error ? error.message : 'Sorry, there was an unexpected error. Please try again later.');
+      }
     }
 
     setIsSubmitting(false);

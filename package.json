@@ -4,9 +4,9 @@
   "description": "Interactive portfolio website with Three.js and custom mouse effects",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "set PORT=5000 && set NODE_ENV=development && node server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon server.js",
+    "server": "set PORT=5000 && set NODE_ENV=development && nodemon server.js",
     "client": "cd client && npm start",
     "build": "cd client && npm run build",
     "build:full": "npm install && cd client && npm install && npm run build",

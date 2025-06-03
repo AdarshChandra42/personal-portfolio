@@ -2,11 +2,22 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
+
+// Add detailed logging middleware
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log('Request headers:', req.headers);
+  if (req.method === 'POST') {
+    console.log('Request body:', req.body);
+  }
+  next();
+});
 
 // Security middleware
 app.use(helmet({
@@ -22,14 +33,20 @@ app.use(helmet({
 
 // Security and CORS configuration
 const corsOptions = {
-  origin: NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL, process.env.BACKEND_URL].filter(Boolean)
-    : true,
-  credentials: true,
+  origin: true, // Allow all origins in development
+  credentials: false, // Changed to false since we don't need credentials
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Accept'],
+  maxAge: 86400 // Cache preflight requests for 24 hours
 };
 
 // Middleware
 app.use(cors(corsOptions));
+
+// Handle OPTIONS requests explicitly
+app.options('*', cors(corsOptions));
+
+// Parse JSON bodies before routes
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -44,13 +61,28 @@ app.use((req, res, next) => {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+// Create nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_APP_PASSWORD, // Use an app password for Gmail
+  },
+});
+
 // API Routes
-app.post('/api/contact', (req, res) => {
+app.post('/api/contact', async (req, res) => {
+  console.log('Contact form submission received:', {
+    body: req.body,
+    headers: req.headers
+  });
+  
   try {
-    const { name, email, message } = req.body;
+    const { name, email, subject, message } = req.body;
     
     // Basic validation
-    if (!name || !email || !message) {
+    if (!name || !email || !subject || !message) {
+      console.log('Validation failed:', { name, email, subject, messageLength: message?.length });
       return res.status(400).json({ 
         success: false, 
         message: 'All fields are required' 
@@ -60,27 +92,49 @@ app.post('/api/contact', (req, res) => {
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
+      console.log('Invalid email format:', email);
       return res.status(400).json({ 
         success: false, 
         message: 'Please provide a valid email address' 
       });
     }
+
+    // Check if email configuration exists
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
+      console.error('Email configuration missing. Please check your .env file');
+      return res.status(500).json({
+        success: false,
+        message: 'Server configuration error. Please try again later.'
+      });
+    }
+
+    // Prepare email content
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER,
+      replyTo: email,
+      subject: `Portfolio Contact: ${subject}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <h3>Message:</h3>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      `,
+    };
+
+    console.log('Attempting to send email...');
+    // Send email
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
     
-    // Log the contact form submission
-    console.log(`[${new Date().toISOString()}] Contact form submission:`, { 
-      name, 
-      email: email.replace(/(.{2})(.*)(@.*)/, '$1***$3'), // Hide email for privacy
-      messageLength: message.length 
-    });
-    
-    // In production, implement actual email sending here
-    // For now, just log and respond
-    res.json({ 
+    res.status(200).json({ 
       success: true, 
       message: 'Thank you for your message! I will get back to you soon.' 
     });
   } catch (error) {
-    console.error('Error processing contact form:', error);
+    console.error('Detailed error in contact form:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Something went wrong. Please try again later.' 
@@ -114,6 +168,10 @@ app.use((err, req, res, next) => {
 
 const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`[${new Date().toISOString()}] Server is running on port ${PORT} in ${NODE_ENV} mode`);
+  console.log('Environment variables check:');
+  console.log('- EMAIL_USER:', process.env.EMAIL_USER ? 'Set' : 'Not set');
+  console.log('- EMAIL_APP_PASSWORD:', process.env.EMAIL_APP_PASSWORD ? 'Set' : 'Not set');
+  console.log('- NODE_ENV:', process.env.NODE_ENV);
 });
 
 // Graceful shutdown

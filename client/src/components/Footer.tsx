@@ -218,7 +218,7 @@ const Footer: React.FC = () => {
       <FooterBottom>
         <Copyright>
           © {new Date().getFullYear()} <GradientText>Adarsh Chandra</GradientText>. 
-          All rights reserved. Built with React, Three.js, and lots of ☕ Deployed on AWS.
+          Deployed on AWS. Built with React, Three.js, and lots of ☕
         </Copyright>
       </FooterBottom>
     </FooterContainer>

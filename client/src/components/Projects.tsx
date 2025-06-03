@@ -61,7 +61,7 @@ const ProjectCard = styled(motion.div)`
   }
 `;
 
-const ProjectImage = styled.div`
+const ProjectImage = styled.div<{ $logo?: string }>`
   height: 200px;
   background: rgba(255, 255, 255, 0.03);
   display: flex;
@@ -78,15 +78,25 @@ const ProjectImage = styled.div`
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    opacity: 0.6;
+    opacity: ${props => props.$logo ? '0.2' : '0.6'};
   }
   
   &::after {
-    content: '📸';
+    content: ${props => props.$logo ? 'none' : '"📸"'};
     position: relative;
     z-index: 1;
     font-size: 3rem;
     opacity: 0.7;
+  }
+
+  img {
+    position: relative;
+    z-index: 1;
+    width: 110%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    padding: 1rem;
   }
 `;
 
@@ -202,16 +212,19 @@ const Projects: React.FC = () => {
       tech: ["GraphQL", "Docker", "RabbitMQ", "Cron Jobs", "MongoDB"],
       liveLink: "#",
       githubLink: "https://github.com/AdarshChandra42/ecom-notifications",
-      showLiveDemo: false
+      showLiveDemo: false,
+      logo: "/proj_1.jpg"
     },
     {
       title: "High Quality Uber clone",
       description:
         "A full-stack web application with microservices architecture built with React, Expres, Node.js. Uses Google Maps API for location services. React+Vite+TailwindCSS for frontend.",
       tech: ["React", "Node.js", "Three.js", "AI"],
-      liveLink: "#",
+      liveLink: "https://frontend-uber.onrender.com/",
       githubLink: "https://github.com/AdarshChandra42/uber-clone",
-      showLiveDemo: true
+      showLiveDemo: true,
+      logo: "/uber-logo.jpg" 
+
     },
     {
       title: "Identity reconcilliation backend service",
@@ -220,7 +233,8 @@ const Projects: React.FC = () => {
       tech: ["PostgreSQL", "Node.js", "Postman"],
       liveLink: "#",
       githubLink: "https://github.com/AdarshChandra42/bitespeed-task",
-      showLiveDemo: false
+      showLiveDemo: false,
+      logo: "/proj_3.jpg"
     }
   ];
 
@@ -248,7 +262,9 @@ const Projects: React.FC = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <ProjectImage />
+              <ProjectImage $logo={project.logo}>
+                {project.logo && <img src={project.logo} alt={`${project.title} logo`} />}
+              </ProjectImage>
               
               <ProjectContent>
                 <ProjectTitle>{project.title}</ProjectTitle>
