@@ -132,9 +132,9 @@ const TechTag = styled.span`
   font-family: 'Geist Mono', monospace;
 `;
 
-const ProjectFooter = styled.div`
+const ProjectFooter = styled.div<{ $hasLiveDemo?: boolean }>`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${props => props.$hasLiveDemo ? 'space-between' : 'flex-end'};
   align-items: center;
   gap: 0.75rem;
 `;
@@ -196,28 +196,31 @@ const GithubIcon = () => (
 const Projects: React.FC = () => {
   const projects = [
     {
-      title: "Project Alpha",
+      title: "Personalized Notifications Backend",
       description:
-        "A cutting-edge web application revolutionizing [domain]. Built with React, Node.js, and Three.js for immersive visualizations.",
+        "Personalized notifications microservices architecture for ecommerce application with a unified GraphQL API, and Rabbitmq for event-driven communication.",
+      tech: ["GraphQL", "Docker", "RabbitMQ", "Cron Jobs", "MongoDB"],
+      liveLink: "#",
+      githubLink: "#",
+      showLiveDemo: false
+    },
+    {
+      title: "High Quality Uber clone",
+      description:
+        "A full-stack web application with microservices architecture built with React, Expres, Node.js. Uses Google Maps API for location services. React+Vite+TailwindCSS for frontend.",
       tech: ["React", "Node.js", "Three.js", "AI"],
       liveLink: "#",
-      githubLink: "#"
+      githubLink: "#",
+      showLiveDemo: true
     },
     {
-      title: "EcoTracker",
+      title: "Identity reconcilliation backend service",
       description:
-        "Mobile app for tracking carbon footprint and promoting sustainable habits. Features real-time data analysis and gamification.",
-      tech: ["Mobile", "Sustainability", "Data"],
+        "Unifies multiple customer contact login information into a single customer profile as primary & secondary contact information and stores in a PostgreSQL database.",
+      tech: ["PostgreSQL", "Node.js", "Postman"],
       liveLink: "#",
-      githubLink: "#"
-    },
-    {
-      title: "Portfolio v2",
-      description:
-        "This very portfolio site, showcasing skills in Next.js, Tailwind CSS, and interactive design with Three.js.",
-      tech: ["Next.js", "Tailwind", "Three.js"],
-      liveLink: "#",
-      githubLink: "#"
+      githubLink: "#",
+      showLiveDemo: false
     }
   ];
 
@@ -257,17 +260,19 @@ const Projects: React.FC = () => {
                   ))}
                 </TechStack>
 
-                <ProjectFooter>
-                  <ProjectButton
-                    href={project.liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="primary"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <ExternalLinkIcon /> Live Demo
-                  </ProjectButton>
+                <ProjectFooter $hasLiveDemo={project.showLiveDemo}>
+                  {project.showLiveDemo && (
+                    <ProjectButton
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="primary"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <ExternalLinkIcon /> Live Demo
+                    </ProjectButton>
+                  )}
                   <ProjectButton
                     href={project.githubLink}
                     target="_blank"

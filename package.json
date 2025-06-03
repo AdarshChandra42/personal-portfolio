@@ -9,12 +9,19 @@
     "server": "nodemon server.js",
     "client": "cd client && npm start",
     "build": "cd client && npm run build",
-    "install-client": "cd client && npm install"
+    "build:full": "npm install && cd client && npm install && npm run build",
+    "install-client": "cd client && npm install",
+    "postinstall": "npm run install-client",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop ecosystem.config.js",
+    "pm2:restart": "pm2 restart ecosystem.config.js",
+    "pm2:delete": "pm2 delete ecosystem.config.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "helmet": "^7.2.0",
     "nodemailer": "^7.0.3",
     "react": "^19.1.0",
     "three": "^0.177.0",
@@ -32,5 +39,9 @@
     "nodejs"
   ],
   "author": "Adarsh",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
 }
