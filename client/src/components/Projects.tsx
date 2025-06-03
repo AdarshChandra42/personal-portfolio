@@ -201,7 +201,7 @@ const Projects: React.FC = () => {
         "Personalized notifications microservices architecture for ecommerce application with a unified GraphQL API, and Rabbitmq for event-driven communication.",
       tech: ["GraphQL", "Docker", "RabbitMQ", "Cron Jobs", "MongoDB"],
       liveLink: "#",
-      githubLink: "#",
+      githubLink: "https://github.com/AdarshChandra42/ecom-notifications",
       showLiveDemo: false
     },
     {
@@ -210,7 +210,7 @@ const Projects: React.FC = () => {
         "A full-stack web application with microservices architecture built with React, Expres, Node.js. Uses Google Maps API for location services. React+Vite+TailwindCSS for frontend.",
       tech: ["React", "Node.js", "Three.js", "AI"],
       liveLink: "#",
-      githubLink: "#",
+      githubLink: "https://github.com/AdarshChandra42/uber-clone",
       showLiveDemo: true
     },
     {
@@ -219,7 +219,7 @@ const Projects: React.FC = () => {
         "Unifies multiple customer contact login information into a single customer profile as primary & secondary contact information and stores in a PostgreSQL database.",
       tech: ["PostgreSQL", "Node.js", "Postman"],
       liveLink: "#",
-      githubLink: "#",
+      githubLink: "https://github.com/AdarshChandra42/bitespeed-task",
       showLiveDemo: false
     }
   ];

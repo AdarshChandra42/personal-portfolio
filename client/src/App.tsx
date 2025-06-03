@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ThreeBackground from './components/ThreeBackground';
+import CustomCursor from './components/CustomCursor';
 import './App.css';
 
 const AppContainer = styled.div`
@@ -25,6 +26,7 @@ const MainContent = styled.main`
 function App() {
   return (
     <AppContainer>
+      <CustomCursor />
       <ThreeBackground />
       <Navigation />
       <MainContent>

@@ -55,7 +55,7 @@ sudo yum groupinstall -y "Development Tools"
 ### Clone your repository:
 ```bash
 git clone https://github.com/yourusername/your-repo.git
-cd your-repo
+cd your-repo 
 ```
 
 ### Make deployment script executable:
@@ -115,7 +115,7 @@ Add this configuration:
 ```nginx
 server {
     listen 80;
-    server_name your-domain.com www.your-domain.com your-ec2-public-ip;
+    server_name adarshchandra.com www.adarshchandra.com 65.2.6.239;
 
     # Gzip compression
     gzip on;
