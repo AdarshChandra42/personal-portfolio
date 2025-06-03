@@ -32,6 +32,36 @@ const TeenageCharacter: React.FC<TeenageCharacterProps> = ({
   const { scene, animations } = useGLTF(modelPaths[currentModelIndex]);
   const { actions, mixer } = useAnimations(animations || [], groupRef);
   
+  // Debug materials and ensure they're preserved
+  useEffect(() => {
+    if (scene) {
+      scene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          // Log material information
+          console.log('Material for mesh:', child.name, child.material);
+          
+          // Ensure materials are preserved
+          if (child.material) {
+            // If it's an array of materials
+            if (Array.isArray(child.material)) {
+              child.material.forEach(mat => {
+                mat.needsUpdate = true;
+                // Ensure material is not transparent
+                mat.transparent = false;
+                mat.opacity = 1;
+              });
+            } else {
+              // Single material
+              child.material.needsUpdate = true;
+              child.material.transparent = false;
+              child.material.opacity = 1;
+            }
+          }
+        }
+      });
+    }
+  }, [scene, currentModelIndex]);
+  
   // Find and store bone references
   useEffect(() => {
     if (scene) {

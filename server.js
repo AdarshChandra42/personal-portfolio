@@ -67,8 +67,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static files from the React app
+// Serve static files from the React app build (for production build)
 app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Serve static files (models, textures, etc.) from client/public
+// This is critical for 3D models and textures to load correctly in production
+app.use(express.static(path.join(__dirname, 'client/public')));
 
 // Create nodemailer transporter
 const transporter = nodemailer.createTransport({

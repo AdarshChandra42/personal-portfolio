@@ -249,7 +249,7 @@ interface FormResponse {
 
 const API_URL = process.env.NODE_ENV === 'production' 
   ? '/api/contact'  // Use relative URL in production
-  : 'http://localhost:5000/api/contact';  // Use localhost in development
+  : 'http://localhost:5001/api/contact';  // Use localhost:5001 in development
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
