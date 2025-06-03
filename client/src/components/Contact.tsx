@@ -247,6 +247,10 @@ interface FormResponse {
   message: string;
 }
 
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? '/api/contact'  // Use relative URL in production
+  : 'http://localhost:5000/api/contact';  // Use localhost in development
+
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -273,7 +277,7 @@ const Contact: React.FC = () => {
     try {
       console.log('Sending form data:', formData);
       
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

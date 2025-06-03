@@ -24,20 +24,29 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https:"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https:"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https:"],
+      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      connectSrc: ["'self'", "https:"],
+      fontSrc: ["'self'", "https:", "data:"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'", "https:"],
+      frameSrc: ["'self'"]
     },
   },
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
 // Security and CORS configuration
 const corsOptions = {
-  origin: true, // Allow all origins in development
-  credentials: false, // Changed to false since we don't need credentials
+  origin: process.env.NODE_ENV === 'production' 
+    ? [process.env.FRONTEND_URL]  // Only allow your domain in production
+    : ['http://localhost:3000', 'http://127.0.0.1:3000'],  // Allow localhost in development
+  credentials: false,
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Accept'],
-  maxAge: 86400 // Cache preflight requests for 24 hours
+  maxAge: 86400
 };
 
 // Middleware
